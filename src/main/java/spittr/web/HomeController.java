@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 //声明一个控制器
 @Controller
+@RequestMapping({ "/", "/homepage" })
 public class HomeController {
 	// 处理对"/"的GET请求
-	@RequestMapping(value = "/", method = GET)
+	@RequestMapping(method = GET)
 	public String home() {
-		//视图名
+		// 视图名
 		return "home";
 	}
 
