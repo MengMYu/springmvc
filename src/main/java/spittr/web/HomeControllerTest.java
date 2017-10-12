@@ -14,7 +14,7 @@ public class HomeControllerTest {
 		HomeController controller = new HomeController();
 		// 搭建MockMvc
 		MockMvc mockMvc = standaloneSetup(controller).build();
-		// 对“/”执行GET请求
+		//  对“/”执行GET请求
 		mockMvc.perform(get("/")).andExpect(view().name("home"));// 预期得到home视图
 	}
 }
