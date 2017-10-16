@@ -32,7 +32,6 @@ public class HomeControllerTest {
 	}
 
 	private List<Spittle> createSpittleList(int i) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
