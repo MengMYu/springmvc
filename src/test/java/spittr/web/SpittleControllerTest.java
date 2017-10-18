@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.text.View;
+
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -17,10 +19,23 @@ import spittr.Spittle;
 import spittr.data.SpittleRepository;
 
 public class SpittleControllerTest {
-	public SpittleControllerTest(SpittleRepository mockRepository) {
-		// TODO Auto-generated constructor stub
+
+	@Test
+	public void shoudShowPagedSpittles() throws Exception {
+		List<Spittle> expectedSpittles = creatSpittleList(50);
+		SpittleRepository mockRespository = Mockito.mock(SpittleRepository.class);
+		// 预期的max和count的值
+		Mockito.when(mockRespository.findSpittles(238900, 50)).thenReturn(expectedSpittles);
+
+		SpittleController controller = new SpittleController(mockRespository);
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller)
+				.setSingleView(new InternalResourceView("/WEB-INF/views/spttles.jsp")).build();
+		mockMvc.perform(MockMvcRequestBuilders.get("/spttles?max=238900&count=50"))
+				.andExpect(MockMvcResultMatchers.view().name("spttles"))
+				.andExpect(MockMvcResultMatchers.model().attributeExists("spttleList")).andExpect(MockMvcResultMatchers
+						.model().attribute("spttleList", Matchers.hasItems(expectedSpittles.toArray())));
 	}
-				
+
 	@Test
 	public void shouldShowRecentSpittles() throws Exception {
 		List<Spittle> expectedSpittles = creatSpittleList(20);
@@ -30,7 +45,7 @@ public class SpittleControllerTest {
 		SpittleController controller = new SpittleController(mockRepository);
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller)
 				.setSingleView(new InternalResourceView("/WEB-INF/views/spttles.jsp")).build();
-		mockMvc.perform(MockMvcRequestBuilders.get("spttles")).andExpect(MockMvcResultMatchers.view().name("spttles"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/spttles")).andExpect(MockMvcResultMatchers.view().name("spttles"))
 				.andExpect(MockMvcResultMatchers.model().attributeExists("spttleList")).andExpect(MockMvcResultMatchers
 						.model().attribute("spttleList", Matchers.hasItems(expectedSpittles.toArray())));
 

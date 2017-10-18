@@ -2,41 +2,40 @@ package spittr.web;
 
 import java.util.List;
 
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.mockito.Mockito;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.servlet.view.InternalResourceView;
+import org.junit.experimental.max.MaxCore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import spittr.Spittle;
 import spittr.data.SpittleRepository;
 
+@Controller
+@RequestMapping("spittles")
 public class SpittleController {
-	public SpittleController(SpittleRepository mockRepository) {
-		// TODO Auto-generated constructor stub
+	private SpittleRepository spittleRepository;
+	private static final String MAX_LONG_AS_STRING = "9223372036854775807";
+
+	// 注入SpittleRepository
+	@Autowired
+	public SpittleController(SpittleRepository spittleRepository) {
+		this.spittleRepository = spittleRepository;
 	}
 
-	@Test
-	public void shouldShowRecentSpittles() throws Exception {
-		List<Spittle> expectedSpittles = creatSpittleList(20);
-		// Mock Repository
-		SpittleRepository mockRepository = Mockito.mock(SpittleRepository.class);
-		Mockito.when(mockRepository.findSpittles(Long.MAX_VALUE, 20)).thenReturn(expectedSpittles);
-		SpittleControllerTest controller = new SpittleControllerTest(mockRepository);
-		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller)
-				.setSingleView(new InternalResourceView("/WEB-INF/views/spttles.jsp")).build();
-		mockMvc.perform(MockMvcRequestBuilders.get("spttles")).andExpect(MockMvcResultMatchers.view().name("spttles"))
-				.andExpect(MockMvcResultMatchers.model().attributeExists("spttleList")).andExpect(MockMvcResultMatchers
-
-						.model().attribute("spttleList", Matchers.hasItems()));
-
+	@RequestMapping(method = RequestMethod.GET)
+	public String spittles(Model model) {
+		// 将spittle添加到模型中
+		model.addAllAttributes(spittleRepository.findSpittles(Long.MAX_VALUE, 20));
+		// 返回视图名
+		return "spittles";
 	}
 
-	private List<Spittle> creatSpittleList(int count) {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(method = RequestMethod.GET)
+	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
+			@RequestParam(value = "count", defaultValue = "20") int count) {
+		return spittleRepository.findSpittles(max, count);
 	}
 }
