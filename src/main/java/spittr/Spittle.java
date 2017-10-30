@@ -9,6 +9,7 @@ public class Spittle {
 	private final Long id;
 	private final String message;
 	private final Date time;
+	private Double latitude;
 	private Double longitude;
 
 	public Spittle(String message, Date time) {
@@ -31,8 +32,6 @@ public class Spittle {
 		return latitude;
 	}
 
-	private Double latitude;
-
 	public Long getId() {
 		return id;
 	}
@@ -47,13 +46,11 @@ public class Spittle {
 
 	@Override
 	public boolean equals(Object that) {
-
 		return EqualsBuilder.reflectionEquals(this, that, "id", "time");
 	}
 
 	@Override
 	public int hashCode() {
-
 		return HashCodeBuilder.reflectionHashCode(this, "id", "time");
 	}
 

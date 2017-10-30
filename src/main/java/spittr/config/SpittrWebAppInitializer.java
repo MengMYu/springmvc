@@ -19,7 +19,6 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
 	// 将dispatcherServlet映射到“/”
 	@Override
 	protected String[] getServletMappings() {
-		// TODO Auto-generated method stub
 		return new String[] { "/" };
 	}
 

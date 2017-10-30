@@ -14,6 +14,7 @@ import spittr.data.SpittleRepository;
 
 public class HomeControllerTest {
 
+	// 对HomeController进行测试
 	@Test
 	public void homeControllerTest() throws Exception {
 		HomeController controller = new HomeController();
@@ -28,7 +29,7 @@ public class HomeControllerTest {
 		List<Spittle> expectedSpittles = createSpittleList(20);
 		SpittleRepository mockRepository = mock(SpittleRepository.class);
 		when(mockRepository.findSpittles(Long.MAX_VALUE, 20)).thenReturn(expectedSpittles);
-		
+
 	}
 
 	private List<Spittle> createSpittleList(int i) {

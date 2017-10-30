@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.text.View;
-
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -29,32 +27,40 @@ public class SpittleControllerTest {
 
 		SpittleController controller = new SpittleController(mockRespository);
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller)
-				.setSingleView(new InternalResourceView("/WEB-INF/views/spttles.jsp")).build();
-		mockMvc.perform(MockMvcRequestBuilders.get("/spttles?max=238900&count=50"))
-				.andExpect(MockMvcResultMatchers.view().name("spttles"))
-				.andExpect(MockMvcResultMatchers.model().attributeExists("spttleList")).andExpect(MockMvcResultMatchers
-						.model().attribute("spttleList", Matchers.hasItems(expectedSpittles.toArray())));
+				.setSingleView(new InternalResourceView("/WEB-INF/views/spittles.jsp")).build();
+		mockMvc.perform(MockMvcRequestBuilders.get("/spittles?max=238900&count=50"))
+				.andExpect(MockMvcResultMatchers.view().name("spittles"))
+				.andExpect(MockMvcResultMatchers.model().attributeExists("spittleList")).andExpect(MockMvcResultMatchers
+						.model().attribute("spittleList", Matchers.hasItems(expectedSpittles.toArray())));
 	}
 
 	@Test
 	public void shouldShowRecentSpittles() throws Exception {
+
 		List<Spittle> expectedSpittles = creatSpittleList(20);
 		// Mock Repository
+
 		SpittleRepository mockRepository = Mockito.mock(SpittleRepository.class);
+
 		Mockito.when(mockRepository.findSpittles(Long.MAX_VALUE, 20)).thenReturn(expectedSpittles);
+
 		SpittleController controller = new SpittleController(mockRepository);
+
+		// Mock Spring MVC
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller)
-				.setSingleView(new InternalResourceView("/WEB-INF/views/spttles.jsp")).build();
-		mockMvc.perform(MockMvcRequestBuilders.get("/spttles")).andExpect(MockMvcResultMatchers.view().name("spttles"))
-				.andExpect(MockMvcResultMatchers.model().attributeExists("spttleList")).andExpect(MockMvcResultMatchers
-						.model().attribute("spttleList", Matchers.hasItems(expectedSpittles.toArray())));
+				.setSingleView(new InternalResourceView("/WEB-INF/views/spittles.jsp")).build();
+		// 对“/spittle”发起GET请求
+		mockMvc.perform(MockMvcRequestBuilders.get("/spittles"))
+				.andExpect(MockMvcResultMatchers.view().name("spittles"))
+				.andExpect(MockMvcResultMatchers.model().attributeExists("spittleList")).andExpect(MockMvcResultMatchers
+						.model().attribute("spittleList", Matchers.hasItems(expectedSpittles.toArray())));
 
 	}
 
 	private List<Spittle> creatSpittleList(int count) {
 		List<Spittle> spittles = new ArrayList<Spittle>();
 		for (int i = 0; i < count; i++) {
-			spittles.add(new Spittle("Spttle " + i, new Date()));
+			spittles.add(new Spittle("Spittle " + i, new Date()));
 		}
 		return spittles;
 	}
