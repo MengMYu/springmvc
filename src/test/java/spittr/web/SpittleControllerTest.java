@@ -24,7 +24,7 @@ public class SpittleControllerTest {
 	public void shoudShowPagedSpittles() throws Exception {
 		List<Spittle> expectedSpittles = creatSpittleList(50);
 		SpittleRepository mockRespository = Mockito.mock(SpittleRepository.class);
-		// 预期的max和count的值
+		// 预期的max和count的值.
 		Mockito.when(mockRespository.findSpittles(238900, 50)).thenReturn(expectedSpittles);
 
 		SpittleController controller = new SpittleController(mockRespository);
