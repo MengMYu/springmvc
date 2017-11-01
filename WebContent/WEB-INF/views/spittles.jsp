@@ -5,14 +5,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>spttles</title>
+<title>spittles</title>
 </head>
 <body>
 
 	<c:forEach items="${spittleList}" var="spittle">
 		<li id="spittle_<c:out value="spittle.id"/>">
 			<div>
-				<c:out value="${spttle.message }" />
+				<c:out value="${spittle.message }" />
 			</div>
 			<div>
 				<span><c:out value=${spittle.time } /> </span> <span>(<c:out
