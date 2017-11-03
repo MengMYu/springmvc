@@ -13,7 +13,7 @@ import spittr.Spittle;
 import spittr.data.SpittleRepository;
 
 @Controller
-@RequestMapping("spittles")
+@RequestMapping("/spittles")
 public class SpittleController {
 	private SpittleRepository spittleRepository;
 	private static final String MAX_LONG_AS_STRING = "9223372036854775807";
@@ -23,18 +23,12 @@ public class SpittleController {
 	public SpittleController(SpittleRepository spittleRepository) {
 		this.spittleRepository = spittleRepository;
 	}
-/*
-	@RequestMapping(method = RequestMethod.GET)
-	public String spittles(Model model) {
-		// 将spittle添加到模型中
-		model.addAllAttributes(spittleRepository.findSpittles(Long.MAX_VALUE, 20));
-		// 返回视图名
-		return "spittles";
-	}
-*/
+
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
+
 			@RequestParam(value = "count", defaultValue = "20") int count) {
 		return spittleRepository.findSpittles(max, count);
 	}
+
 }

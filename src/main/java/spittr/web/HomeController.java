@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 //声明一个控制器
-@Controller
+@Controller // 和@Component注解相同
 @RequestMapping({ "/", "/homepage" })
 public class HomeController {
 	// 处理对"/"的GET请求
