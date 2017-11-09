@@ -29,7 +29,7 @@ public class SpitterController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	// 校验spitter
 	public String processRegistration(@Valid Spitter spitter, Errors errors) {
-		// 如果校验出现错误，则重新输入 表单
+		// 如果校验出现错误，则重新输入 表 单
 		if (errors.hasErrors()) {
 			return "registerForm";
 		}
