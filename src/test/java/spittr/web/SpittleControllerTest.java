@@ -59,7 +59,7 @@ public class SpittleControllerTest {
 		Spittle expectedSpittle = new Spittle("hello", new Date());
 		SpittleRepository mockRepository = Mockito.mock(SpittleRepository.class);
 		Mockito.when(mockRepository.findOne(12345)).thenReturn(expectedSpittle);
-
+ 
 		SpittleController controller = new SpittleController(mockRepository);
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 		// 通过路径请求资源
