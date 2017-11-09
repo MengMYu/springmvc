@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import spittr.Spitter;
 import spittr.data.SpitterRepository;
-
-@Controller
+ 
 @RequestMapping("/spitter")
 public class SpitterController {
 
